@@ -15,5 +15,12 @@ def seq_len(sequence):
     return len(sequence)
 
 
-def seq_count_base(seq, base):
-    return seq.count(base)
+def seq_count_base(sequence, base):
+    return sequence.count(base)
+
+
+def seq_count(sequence):
+    gene_dict = {"A": 0, "C": 0, "G": 0, "T": 0}
+    for base in sequence:
+        gene_dict[base] += 1
+    return gene_dict
