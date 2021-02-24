@@ -24,3 +24,7 @@ def seq_count(sequence):
     for base in sequence:
         gene_dict[base] += 1
     return gene_dict
+
+
+def seq_reverse(sequence):
+    return sequence[::-1]
