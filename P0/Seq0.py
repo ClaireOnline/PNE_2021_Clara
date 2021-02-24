@@ -13,3 +13,7 @@ def seq_read_fasta(filename):
 
 def seq_len(sequence):
     return len(sequence)
+
+
+def seq_count_base(seq, base):
+    return seq.count(base)
