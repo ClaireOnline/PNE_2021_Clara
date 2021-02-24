@@ -28,3 +28,11 @@ def seq_count(sequence):
 
 def seq_reverse(sequence):
     return sequence[::-1]
+
+
+def seq_complement(sequence):
+    complement_seq = ""
+    complement_dict = {"A": "T", "C": "G", "G": "C", "T": "A"}
+    for base in sequence:
+        complement_seq += complement_dict[base]
+    return complement_seq
