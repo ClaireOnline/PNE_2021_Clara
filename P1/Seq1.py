@@ -28,3 +28,13 @@ class Seq:
             return 0
         else:
             return len(self.strbases)
+
+    def count_base(self, base):
+        return self.strbases.count(base)
+
+    def count(self):
+        gene_dict = {"A": 0, "C": 0, "G": 0, "T": 0}
+        sequence = self.strbases
+        for base in sequence:
+            gene_dict[base] += 1
+        return gene_dict
