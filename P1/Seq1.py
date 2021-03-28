@@ -48,3 +48,13 @@ class Seq:
             return self.strbases
         else:
             return self.strbases[::-1]
+
+    def complement(self):
+        if self.strbases == "NULL" or self.strbases == "ERROR":
+            return self.strbases
+        else:
+            complement_seq = ""
+            complement_dict = {"A": "T", "C": "G", "G": "C", "T": "A"}
+            for base in self.strbases:
+                complement_seq += complement_dict[base]
+            return complement_seq
