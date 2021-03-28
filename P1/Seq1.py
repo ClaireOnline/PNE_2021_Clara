@@ -8,7 +8,7 @@ class Seq:
             c = 0
             for base in strbases:
                 if base != "A" and base != "C" and base != "T" and base != "G":
-                    print("ERROR!!")
+                    print("INVALID Seq!")
                     self.strbases = "ERROR"
                     break
                 else:
