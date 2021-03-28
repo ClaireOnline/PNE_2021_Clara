@@ -42,3 +42,9 @@ class Seq:
             for base in sequence:
                 gene_dict[base] += 1
         return gene_dict
+
+    def reverse(self):
+        if self.strbases == "NULL" or self.strbases == "ERROR":
+            return self.strbases
+        else:
+            return self.strbases[::-1]
