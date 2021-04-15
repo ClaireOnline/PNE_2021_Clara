@@ -1,8 +1,8 @@
 import socket
 
 # Configure the Server's IP and PORT
-PORT = 8081
-IP = "192.168.1.50"
+PORT = 8080
+IP = "127.0.0.1"
 MAX_OPEN_REQUESTS = 5
 
 # Counting the number of connections
@@ -33,13 +33,12 @@ try:
 
         # Send the message
         message = "Hello from the teacher's server"
-        send_bytes = str.encode(message)
         # We must write bytes, not a string
-        clientsocket.send(send_bytes)
+        clientsocket.send(message.encode())
         clientsocket.close()
 
-except socket.error:
-    print("Problems using port {}. Do you have permission?".format(PORT))
+except Exception as e:
+    print(e)
 
 except KeyboardInterrupt:
     print("Server stopped by the user")
