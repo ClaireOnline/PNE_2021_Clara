@@ -42,7 +42,7 @@ while True:
             utils.print_colored("GENE", "green")
             res = utils.gene(msg.replace("GENE ", "../P0/Sequences/"))
         else:
-            res = "..."
+            res = "... Not a valid command ..."
         print(res)
         cs.send(res.encode())
         cs.close()
