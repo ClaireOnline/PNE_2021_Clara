@@ -39,7 +39,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         elif self.path.startswith("/echo"):
             message = parse_qs(urlparse(self.path).query)["msg"][0]
             termcolor.cprint(message, "yellow")
-            contents = read_template(HTMLS + "template.html").render(msg=message)
+            contents = read_template(HTMLS + "ping.html").render(msg=message)
         else:
             contents = read(HTMLS + "Error.html")
         # Generating the response message

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>SeqServer</title>
+</head>
+<body style="background-color: antiquewhite;">
+    <h1>SEQ2 Server</h1> <br>
+    Access to the server:
+    <hr>
+    <form action="ping" method="get">
+        Is the server alive?
+        <input type="submit" value="PING">
+        <hr>
+    </form>
+    <form action="get" method="get">
+        Get a Sequence. Select sequence number
+        <select name="sequence">
+            {% for n in range(0, context.n_seq) %}
+            <option value="{{n}}">{{n}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="GET"/>
+        <hr>
+    </form>
+    <form action="gene" method="get">
+        Get a Gene. Select the name
+        <select name="gene">
+            {% for n in context.list_genes %}
+            <option value="{{n}}">{{n}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="GET"/>
+        <hr>
+    </form>
+    <form action="operation" method="get">
+        Write a sequence: <input type="text" name="seq">
+        <br>
+        Select operation
+        {% for n in context.ops %}
+            <input type="radio" name="op" value="{{n}}">{{n}}</input>
+        {% endfor %}
+        <br>
+        Perform operation: <input type="submit" value="OPERATE!"/>
+        <hr>
+    </form>
+</body>
+</html>

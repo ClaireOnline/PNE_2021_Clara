@@ -41,7 +41,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             if self.path.split("=")[-1] == "on":
                 message = message.upper()
             termcolor.cprint(message, "yellow")
-            contents = read_template(HTMLS + "template.html").render(msg=message)
+            contents = read_template(HTMLS + "ping.html").render(msg=message)
         else:
             contents = read(HTMLS + "Error.html")
         # Generating the response message
