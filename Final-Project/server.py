@@ -2,18 +2,13 @@ import http.client
 import json
 import Seq1
 import http.server
-import socketserver
 import termcolor
 import server_utils as utils
 from urllib.parse import urlparse, parse_qs
 
 PORT = 8080
 HTMLS = "./html/"
-LIST_SEQ = ["ACCAGATTTAACAAG", "ACAGAACTTAACTTA", "GCTAGAGACTACAGA", "ACTAGATAATAACCG", "TACGGCTTAAACCAT"]
-LIST_GENES = ["ADA", "FRAT1", "FXN", "RNU6_169P", "U5"]
-LIST_OPS = ["Info", "Comp", "Rev"]
-
-socketserver.TCPServer.allow_reuse_address = True
+SERVER = "rest.ensembl.org"
 
 
 class TestHandler(http.server.BaseHTTPRequestHandler):
@@ -37,9 +32,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             context["list_genes"] = LIST_GENES
             context["ops"] = LIST_OPS
             contents = utils.read_template(HTMLS + 'Index.html').render(context=context)
-        elif path_name == "/ping":
-            contents = utils.read_template(HTMLS + 'ping.html').render()
-        elif path_name == "/get":
+        elif path_name == "/listSpecies":
+            contents = utils.read_template(HTMLS + 'list.html').render()
+        elif path_name == "/karyotype":
             num_seq = arguments["sequence"][0]
             contents = utils.get(LIST_SEQ, num_seq)
         elif path_name == "/gene":
@@ -69,7 +64,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(str.encode(contents))
 
         return
-SERVER = "rest.ensembl.org"
+
+
 ENDPOINT = "/sequence/id/"
 PARAMS = "?content-type=application/json"
 
