@@ -40,6 +40,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             message = parse_qs(urlparse(self.path).query)["msg"][0]
             termcolor.cprint(message, "yellow")
             contents = read_template(HTMLS + "template.html").render(msg=message)
+        else:
+            contents = read(HTMLS + "Error.html")
         # Generating the response message
         self.send_response(200)  # -- Status line: OK!
 
