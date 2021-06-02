@@ -36,15 +36,16 @@ class Seq:
         if self.strbases == "NULL" or self.strbases == "ERROR":
             return 0
         else:
-            return self.strbases.count(base)
+            seq = self.strbases
+            return seq.count(base)
 
-    def count(self):
-        gene_dict = {"A": 0, "C": 0, "G": 0, "T": 0}
-        sequence = self.strbases
+    def counts(self):
         if self.strbases != "NULL" and self.strbases != "ERROR":
-            for base in sequence:
-                gene_dict[base] += 1
-        return gene_dict
+            a = self.count_base("A")
+            c = self.count_base("C")
+            g = self.count_base("G")
+            t = self.count_base("T")
+        return {"A": a, "C": c, "G": g, "T": t}
 
     def reverse(self):
         if self.strbases == "NULL" or self.strbases == "ERROR":
@@ -71,3 +72,11 @@ class Seq:
     @staticmethod
     def most_freq(dict_count):
         return max(dict_count, key=dict_count.get)
+
+    @staticmethod
+    def percentage_base(count_bases, seq_len):
+        a = str(round(list(count_bases.values())[0]/seq_len * 100, 2)) + "%"
+        c = str(round(list(count_bases.values())[1] / seq_len * 100, 2)) + "%"
+        g = str(round(list(count_bases.values())[2] / seq_len * 100, 2)) + "%"
+        t = str(round(list(count_bases.values())[3] / seq_len * 100, 2)) + "%"
+        return a, c, g, t
