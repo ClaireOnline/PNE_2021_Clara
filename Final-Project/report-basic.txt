@@ -1,0 +1,259 @@
+Test report
+============
+---> Main page
+*Input:  http://127.0.0.1:8080/
+
+* Output:
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html"><head>
+    <meta charset="UTF-8">
+    <title>FinalServer</title>
+</head>
+<body style="background-color: mistyrose;" class="">
+    <h1>Browsing Human and Vertebrates genome</h1>
+    <h2>BASIC Level Services</h2>
+    <form action="listSpecies" method="get">
+        <p>1) List of species in the genome database</p>
+        <p>Limit : <input type="text" name="limit"></p>
+        <input type="submit" value="Send"><br>
+    </form>
+    <form action="karyotype" method="get">
+        <p>2) Information about the karyotype:</p>
+        <p>Select the species : <input type="text" name="species"></p>
+        <input type="submit" value="Send"><br>
+    </form>
+    <form action="chromosomeLength" method="get">
+        <p>3) Chromosome Length : </p>
+        <p>Select the species : <input type="text" name="species"></p>
+        <p>Select a chromosome : <input type="text" name="chromosome"></p>
+        <input type="submit" value="Send"><br>
+    </form>
+
+
+</body></html>
+
+---> listSpecies endpoint
+
+
+* Input:  http://127.0.0.1:8080/listSpecies
+
+* Output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+        <meta charset="utf-8">
+        <title>Error</title>
+      </head>
+      <body style="background-color: lightseagreen;" class="">
+        <h1>Species</h1>
+        <p>The total number of species listed in the ensembl database is: 310</p>
+        <p>The limit you have selected is: </p>
+        <p>The name of the species are:</p>
+        <textarea id="spc_list" name="spc_list" rows="5" cols="50">        Yellowtail amberjack, lumpfish, eastern brown snake, ryukyu mouse, silver-eye, turbot, pig, mouse, tongue sole, degu, shrew mouse, alpine marmot, damara mole rat, nine-banded armadillo, zig-zag eel, pike-perch, norway rat, mouse, gelada, rainbow trout, red fox, three-spined stickleback, sheepshead minnow, periophthalmus magnuspinnatus, shortfin molly, vaquita, coho salmon, paramormyrops kingsleyae, sea lamprey, american beaver, gilthead seabream, dog, superb fairywren, sperm whale, eurasian red squirrel, fruit fly, northern spotted owl, rabbit, "ords kangaroo rat", mummichog, beluga whale, indian peafowl, pachon cavefish, dingo, blunt-snouted clingfish, domestic guinea pig, african green monkey, pig, chinese medaka, sailfin molly, ring-necked pheasant, gouldian finch, california sea lion, horned golden-line barbel, western mosquitofish, komodo dragon, human, little spotted kiwi, sheep, "hoffmanns two-fingered sloth", pig, coelacanth, siberian musk deer, wild yak, great tit, steppe mouse, southern platyfish, hybrid cattle, black snub-nosed monkey, atlantic salmon, west african mud turtle, olive baboon, vole, muscovy duck (domestic type), goldfish, gray mouse lemur, "bakers yeast", chimpanzee, common snapping turtle, huchen, giant panda, european seabass, yellow-billed parrot, small tree finch, chinook salmon, chinese hamster, white-headed capuchin, "coquerels sifaka", swamp eel, new caledonian crow, emu, common carp huanghe, monterrey platyfish, polar bear, common canary, pig-tailed macaque, drill, large yellow croaker, australian saltwater crocodile, common wombat, asiatic black bear, blue-crowned manakin, ugandan red colobus, golden eagle, mainland tiger snake, tiger tail seahorse, mouse, budgie, large flying fox, pig, eastern happy, kakapo, elephant shark, "mas night monkey", chinese softshell turtle, northern american deer mouse, european shrew, american mink, dark-eyed junco, goat, sheep, bornean orangutan, collared flycatcher, pink-footed goose, japanese medaka hni, orange clownfish, turkey, common wall lizard, golden pheasant, zebra finch, barramundi perch, blind barbel, ruff, midas cichlid, tuatara, pig, northern white-cheeked gibbon, mouse, channel bull blenny, white-tufted-ear marmoset, koala, northern tree shrew, bolivian squirrel monkey, angola colobus, climbing perch, jewelled blenny, lyretail cichlid, american bison, mallard, tiger, chicken, pig, japanese quail, mouse, pig, tropical clawed frog, mouse, mouse, eastern buzzard, northern pike, pinecone soldierfish, blue whale, electric eel, c.elegans, mangrove rivulus, donkey, spoon-billed sandpiper, upper galilee mountains blind mole rat, arctic ground squirrel, medium ground-finch, golden snub-nosed monkey, green anole, burrowing owl, three-toed box turtle, african ostrich, fugu, canada lynx, tasmanian devil, golden hamster, golden-collared manakin, atlantic herring, chinese hamster, meerkat, pig, algerian mouse, bonobo, african savanna elephant, spotted green pufferfish, macaque, mouse, mouse, bottlenosed dolphin, mouse, tammar wallaby, sea squirt ciona intestinalis, amazon molly, crab-eating macaque, alpaca, common carp hebao red, central bearded dragon, ballan wrasse, spotted gar, chacoan peccary, horse, lesser egyptian jerboa, american pika, gray short-tailed opossum, domestic yak, "swainsons thrush", goat, pig, japanese medaka hdrr, swan goose, rufous-capped babbler, argentine black and white tegu, hybrid cattle, chilean tinamou, common kestrel, leishan spiny toad, bicolor damselfish, naked mole-rat, mouse, blue tilapia, western european hedgehog, eurasian sparrowhawk, live sharksucker, pig, reedfish, indian glassy fish, small-eared galago, domestic cat, naked mole-rat, blue tit, philippine tarsier, eurasian eagle-owl, "agassizs desert tortoise", lion, common carp german mirror, atlantic cod, pig, mouse, yarkand deer, mexican tetra, mouse, asian bonytongue, ocean sunfish, mouse, brown trout, inshore hagfish, little brown bat, small madagascar hedgehog, arabian camel, great spotted kiwi, daurian ground squirrel, sea squirt ciona savignyi, zebra mbuna, zebrafish, greater amberjack, cape rock hyrax, pig, abingdon island giant tortoise, western painted turtle, narwhal, brazilian guinea pig, platypus, orbiculate cardinalfish, japanese medaka hsok, cattle, clown anemonefish, long-tailed chinchilla, siamese fighting fish, nile tilapia, okarito brown kiwi, round goby, "burtons mouthbrooder", western lowland gorilla, pig, makobe island cichlid, turquoise killifish, dog, greater horseshoe bat, domestic ferret, golden-line barbel, channel catfish, blue-ringed sea krait, mouse, red-bellied piranha, helmeted guineafowl, chinese hamster, denticle herring, eastern spot-billed duck, oriental scops-owl, indian medaka, common carp, leopard, thirteen-lined ground squirrel, bengalese finch, goodes thornscrub tortoise, white-throated sparrow, spiny chromis, common mallard, american black bear, sooty mangabey, indian cobra, guppy, mouse, dog, greater bamboo lemur, javanese ricefish, mongolian gerbil
+        </textarea><br>
+
+    </body></html>
+
+
+* Input:  http://127.0.0.1:8080/listSpecies?limit=2
+
+* Output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+        <meta charset="utf-8">
+        <title>Error</title>
+      </head>
+      <body style="background-color: lightseagreen;" class="">
+        <h1>Species</h1>
+        <p>The total number of species listed in the ensembl database is: 310</p>
+        <p>The limit you have selected is: 2</p>
+        <p>The name of the species are:</p>
+        <textarea id="spc_list" name="spc_list" rows="5" cols="50">        Yellowtail amberjack, lumpfish
+        </textarea><br>
+
+    </body></html>
+
+* Input:  http://127.0.0.1:8080/listSpecies?limit=10
+
+* Output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+        <meta charset="utf-8">
+        <title>Error</title>
+      </head>
+      <body style="background-color: lightseagreen;" class="">
+        <h1>Species</h1>
+        <p>The total number of species listed in the ensembl database is: 310</p>
+        <p>The limit you have selected is: 10</p>
+        <p>The name of the species are:</p>
+        <textarea id="spc_list" name="spc_list" rows="5" cols="50">        Crab-eating macaque, sooty mangabey, tropical clawed frog, donkey, mouse, pig, silver-eye, sheep, fugu, little spotted kiwi
+        </textarea><br>
+
+    </body></html>
+
+
+--> karyotype endpoint
+
+* Input:  http://127.0.0.1:8080/karyotype?species=human
+
+* Output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head></head><body style="background-color: lightseagreen;" class=""><doctype html="">
+
+
+        <meta charset="utf-8">
+        <title>Error</title>
+
+
+        <h1>Karyotype</h1>
+        <p>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+X
+Y
+MT</p>
+
+
+
+    </doctype></body></html>
+
+
+* Input:  http://127.0.0.1:8080/karyotype?species=mouse
+
+* Output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head></head><body style="background-color: lightseagreen;" class=""><doctype html="">
+
+
+        <meta charset="utf-8">
+        <title>Error</title>
+
+
+        <h1>Karyotype</h1>
+        <p>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+X
+Y
+MT</p>
+
+
+
+    </doctype></body></html>
+
+
+* Input:  http://127.0.0.1:8080/karyotype?species=
+
+* Output:  (Error)
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+        <meta charset="utf-8">
+        <title>Error</title>
+      </head>
+      <body style="background-color: red;" class="">
+        <h1>ERROR</h1>
+        <p>Welcome to the DATA ERROR server</p>
+        <p>If you are here is because the data you have entered does not exist in the ensembl</p>
+        <h3>SORRY!!</h3>
+
+    </body></html>
+
+
+
+--> chromosomeLength endpoint
+
+* Input:  http://127.0.0.1:8080/chromosomeLength?species=human&chromosome=12
+
+* Output:
+
+<html lang="en" dir="ltr"><head></head><body style="background-color: lightseagreen;" class=""><doctype html="">
+
+
+        <meta charset="utf-8">
+        <title>Error</title>
+
+
+        <h1>Chromosome length</h1>
+        <p>133275309</p>
+
+
+
+    </doctype></body></html>
+
+
+* Input:  http://127.0.0.1:8080/chromosomeLength?species=human&chromosome=34
+
+* Output:  (Error)
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+        <meta charset="utf-8">
+        <title>Error</title>
+      </head>
+      <body style="background-color: red;" class="">
+        <h1>ERROR</h1>
+        <p>Welcome to the DATA ERROR server</p>
+        <p>If you are here is because the data you have entered does not exist in the ensembl</p>
+        <h3>SORRY!!</h3>
+
+    </body></html>
+
+
+* Input:  http://127.0.0.1:8080/chromosomeLength?species=&chromosome=34
+
+* Output:  (Error)
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+        <meta charset="utf-8">
+        <title>Error</title>
+      </head>
+      <body style="background-color: red;" class="">
+        <h1>ERROR</h1>
+        <p>Welcome to the DATA ERROR server</p>
+        <p>If you are here is because the data you have entered does not exist in the ensembl</p>
+        <h3>SORRY!!</h3>
+
+    </body></html>
+

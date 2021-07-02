@@ -16,11 +16,7 @@ def format_command(command):
     return command.replace("\r", "").replace("\n", "")
 
 
-def ping():
-    print_colored("PING command!", "green")
-
-
-def get(list_seq, seq_num):
+def list(list_seq, seq_num):
     context = {
         "number": seq_num,
         "sequence": list_seq[int(seq_num)]

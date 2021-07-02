@@ -1,14 +1,11 @@
 import http.server
 import socketserver
 import termcolor
-import json
 from pathlib import Path
 
 # Define the Server's port
 PORT = 8080
-HTML_FILES = "./html"
-answer = {'Name': 'Adenine', 'Letter': 'A', 'Link': 'https://en.wikipedia.org/wiki/Adenine', 'Formula': 'C5H5N5'}
-
+HTML_FILES = "./html", ".html"
 
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
@@ -30,28 +27,21 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         termcolor.cprint(self.requestline, 'green')
 
         file_name = self.path
-        contents = None
         if self.path == "/":
-            file_name += "index.html"
-        elif "info/A" in self.path:
-            contents = json.dumps(answer)
-        elif "info" in self.path and "info/A" not in self.path:
+            file_name += "index"
+        elif "info" in self.path:
             file_name = file_name[5:]
         print(file_name)
-        if not contents:
-            try:
-                contents = read(HTML_FILES + file_name)
-            except FileNotFoundError:
-                contents = read(HTML_FILES + "/Error.html")
+        try:
+            contents = read(HTML_FILES[0] + file_name)
+        except FileNotFoundError:
+            contents = read(HTML_FILES[0] + "/Error" + HTML_FILES[1])
 
         # Generating the response message
         self.send_response(200)  # -- Status line: OK!
 
         # Define the content-type header:
-        if "info/A" in self.path:
-            self.send_header('Content-Type', 'application/json')
-        else:
-            self.send_header('Content-Type', 'text/html')
+        self.send_header('Content-Type', 'text/html')
         # noinspection PyTypeChecker
         self.send_header('Content-Length', len(contents.encode()))
 

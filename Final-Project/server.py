@@ -1,14 +1,26 @@
+import http.server
 import http.client
 import json
-import Seq1
-import http.server
+import socketserver
 import termcolor
-import server_utils as utils
+import final_server_utils as utils
 from urllib.parse import urlparse, parse_qs
 
 PORT = 8080
 HTMLS = "./html/"
-SERVER = "rest.ensembl.org"
+SERVER = "127.0.0.1"
+
+
+def client(ENDPOINT):
+    SERV = "rest.ensembl.org"
+    PARAMS = "?content-type=application/json"
+    conn = http.client.HTTPConnection(SERV)
+    conn.request("GET", ENDPOINT + PARAMS)
+    res = conn.getresponse()
+    print("Response received!", res.status, res.reason)
+    decod_res = res.read().decode()
+    dict_res = json.loads(decod_res)
+    return dict_res
 
 
 class TestHandler(http.server.BaseHTTPRequestHandler):
@@ -27,34 +39,68 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         print("Parameters:", arguments)
 
         context = {}
-        if path_name == "/":
-            context["n_seq"] = len(LIST_SEQ)
-            context["list_genes"] = LIST_GENES
-            context["ops"] = LIST_OPS
-            contents = utils.read_template(HTMLS + 'Index.html').render(context=context)
-        elif path_name == "/listSpecies":
-            contents = utils.read_template(HTMLS + 'list.html').render()
-        elif path_name == "/karyotype":
-            num_seq = arguments["sequence"][0]
-            contents = utils.get(LIST_SEQ, num_seq)
-        elif path_name == "/gene":
-            gene = arguments["gene"][0]
-            contents = utils.gene(gene)
-        elif path_name == "/operation":
-            seq = arguments["seq"][0]
-            op = arguments["op"][0]
-            if op == "Info":
-                contents = utils.info(seq)
-            elif op == "Comp":
-                contents = utils.comp(seq)
-            elif op == "Rev":
-                contents = utils.rev(seq)
-        else:
+        content_type = "text/html"
+        try:
+            if path_name == "/":
+                contents = utils.read_template(HTMLS + 'Index.html').render(context=context)
+            elif path_name == "/listSpecies":
+                res_dict = client("/info/species")
+                val_dict = res_dict.values()
+                list_spc = []
+                for dict in val_dict:
+                    for val in dict:
+                        spc = val["common_name"]
+                        list_spc.append(spc)
+                if "limit" in arguments:
+                    limit = arguments["limit"][0]
+                    context["limit"] = limit
+                    i_limit = int(limit)
+                    fin_spc_list = str(list_spc[:i_limit])
+                else:
+                    fin_spc_list = str(list_spc)
+                context["tot_len"] = len(list_spc)
+                context["fin_spc_list"] = fin_spc_list.replace("'", "").strip("[]").capitalize()
+                if "json" in arguments:
+                    contents = json.dumps(context)
+                    content_type = "application/json"
+                else:
+                    contents = utils.read_template(HTMLS + 'list.html').render(context=context)
+            elif path_name == "/karyotype":
+                spec = arguments["species"][0]
+                spec = spec.lower().replace(" ", "_")
+                res_dict = client("/info/assembly/"+spec)
+                kar = res_dict["karyotype"]
+                context["kar"] = str(kar).replace("'", "").replace(", ", "\n").strip("[]")
+                if "json" in arguments:
+                    contents = json.dumps(context)
+                    content_type = "application/json"
+                else:
+                    contents = utils.read_template(HTMLS + 'karyo.html').render(context=context)
+            elif path_name == "/chromosomeLength":
+                spec = arguments["species"][0]
+                name = arguments["chromosome"][0]
+                spec = spec.lower().replace(" ", "_")
+                res_dict = client("/info/assembly/"+spec)
+                res_list = res_dict["top_level_region"]
+                for dict in res_list:
+                    for val in dict.values():
+                        if val == name:
+                            length = dict["length"]
+                            break
+                context["len"] = str(length)
+                if "json" in arguments:
+                    contents = json.dumps(context)
+                    content_type = "application/json"
+                else:
+                    contents = utils.read_template(HTMLS + 'c_length.html').render(context=context)
+            else:
+                contents = utils.read_template(HTMLS + 'Error.html').render()
+        except:
             contents = utils.read_template(HTMLS + 'Error.html').render()
 
         self.send_response(200)  # -- Status line: OK!
 
-        self.send_header('Content-Type', 'text/html')
+        self.send_header('Content-Type', content_type)
 
         # noinspection PyTypeChecker
         self.send_header('Content-Length', len(str.encode(contents)))
@@ -66,29 +112,22 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         return
 
 
-ENDPOINT = "/sequence/id/"
-PARAMS = "?content-type=application/json"
+# ------------------------
+# - Server MAIN program
+# ------------------------
+# -- Set the new handler
+Handler = TestHandler
 
-conn = http.client.HTTPConnection(SERVER)
-for gen in GENES:
-    gene_id = GENES[gen]
-    conn.request("GET", ENDPOINT + gene_id + PARAMS)
-    res = conn.getresponse()
-    print("Response received!", res.status, res.reason)
-    if res.status == 200:
-        res = json.loads(res.read().decode())
-        # print(json.dumps(res, indent=4, sort_keys=True))
-        print("Gene:", gen)
-        print("Description:", res["desc"])
-        sequence = Seq1.Seq(res["seq"])
-        s_length = Seq1.Seq.len(sequence)
-        print("Total length:", s_length)
-        count_dict = Seq1.Seq.counts(sequence)
-        a, c, g, t = Seq1.Seq.percentage_base(count_dict, s_length)
-        print("A:", sequence.count_base("A"), "(" + a + ")")
-        print("C:", sequence.count_base("C"), "(" + c + ")")
-        print("G:", sequence.count_base("G"), "(" + g + ")")
-        print("T:", sequence.count_base("T"), "(" + t + ")")
-        print("Most frequent base:", Seq1.Seq.most_freq(Seq1.Seq.counts(sequence)))
-    elif res.status == 404:
-        print("Check if the ENDPOINT was correctly written!!")
+# -- Open the socket server
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+
+    print("Serving at PORT", PORT)
+
+    # -- Main loop: Attend the client. Whenever there is a new
+    # -- clint, the handler is called
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print("")
+        print("Stopped by the user")
+        httpd.server_close()

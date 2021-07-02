@@ -6,6 +6,11 @@
       </head>
       <body style="background-color: lightseagreen;">
         <h1>Species</h1>
-        <p>The total number of species listed in </p>
+        <p>The total number of species listed in the ensembl database is: {{context.tot_len}}</p>
+        <p>The limit you have selected is: {{context.limit}}</p>
+        <p>The name of the species are:</p>
+        <textarea id="spc_list" name="spc_list" rows="5" cols="50">
+        {{context.fin_spc_list}}
+        </textarea><br>
       </body>
     </html>
