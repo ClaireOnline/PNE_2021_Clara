@@ -29,6 +29,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         print("Parameters:", arguments)
 
         context = {}
+        contents = None
         if path_name == "/":
             context["n_seq"] = len(LIST_SEQ)
             context["list_genes"] = LIST_GENES
